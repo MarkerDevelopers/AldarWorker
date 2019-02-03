@@ -32,12 +32,10 @@ public class PathFinder {
         while(!PathFindTool.getInstance().equals(currentNode.getLocation(), endNode.getLocation())) {
             currentNode = currentNode.getNode();
 
-            if(closedNodes.contains(currentNode.getLocation())) {
-                System.out.println(currentNode);
-                continue;
-            }
+            if(currentNode == null) return PathFindType.Failed;
 
-            System.out.println("Heuristic " + currentNode.toString() + " : " + currentNode.getHeuristic());
+            if(closedNodes.contains(currentNode.getLocation()))
+                continue;
 
             if(!currentNode.isOpened()) return PathFindType.Failed;
 
@@ -51,5 +49,5 @@ public class PathFinder {
     }
 
     public List<Node> getPath() { return path; }
-
+    public Node getEndNode() { return endNode; }
 }

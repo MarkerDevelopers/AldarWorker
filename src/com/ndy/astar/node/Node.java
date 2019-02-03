@@ -10,31 +10,35 @@ import java.util.Queue;
 public class Node implements IHeuristic, Comparable<IHeuristic>, Cloneable {
 
     private boolean isOpened;
-    private Location location, end, before;
+    private Location location, end;
     private Queue<Node> nodes = new PriorityQueue<>();
     private int height;
-    private int g, n; // 휴리스틱 추정값중 G
+    private float g; // 휴리스틱 추정값중 G
     private int uid;
 
-    public Node(Location location, Location end, int g, int uid) {
+    public Node(Location location, Location end, float g, int uid) {
         this.end = end;
         this.g = g;
         this.uid = uid;
-        this.location = location;
         this.height = PathFindTool.getInstance().getBlockHeight(location.clone());
-        this.isOpened = Util.isAllowBlock(location.getBlock()) && !isWall();
+
+        this.location = PathFindTool.getInstance().getHeightBlock(location, height);
+
+
+        this.isOpened = Util.isAllowBlock(location.clone().subtract(0, 1, 0).getBlock()) && !isWall() && !PathFindTool.getInstance().isGround(location);
+
     }
 
     public void initialize() {
-        nodes.add(new Node(location.clone().add(1, 0, 0), end, 10, 1));
-        nodes.add(new Node(location.clone().add(1, 0, 1), end, 14, 2));
-        nodes.add(new Node(location.clone().add(0, 0, 1), end, 10, 3));
-        nodes.add(new Node(location.clone().add(1, 0, -1), end,14, 4));
+        nodes.add(new Node(location.clone().add(1, 0, 0), end, 10.0F, 1));
+        nodes.add(new Node(location.clone().add(1, 0, 1), end, 10.5F, 2));
+        nodes.add(new Node(location.clone().add(0, 0, 1), end, 10.0F, 3));
+        nodes.add(new Node(location.clone().add(1, 0, -1), end,10.5F, 4));
 
-        nodes.add(new Node(location.clone().subtract(1, 0, 0), end, 10, 5));
-        nodes.add(new Node(location.clone().subtract(1, 0, 1), end, 14, 6));
-        nodes.add(new Node(location.clone().subtract(0, 0, 1), end, 10, 7));
-        nodes.add(new Node(location.clone().subtract(1, 0, -1), end, 14, 8));
+        nodes.add(new Node(location.clone().subtract(1, 0, 0), end, 10.0F, 5));
+        nodes.add(new Node(location.clone().subtract(1, 0, 1), end, 10.5F, 6));
+        nodes.add(new Node(location.clone().subtract(0, 0, 1), end, 10.0F, 7));
+        nodes.add(new Node(location.clone().subtract(1, 0, -1), end, 10.5F, 8));
     }
 
     public boolean isWall() { return height >= PathFindTool.getHeightGap(); }
@@ -47,17 +51,19 @@ public class Node implements IHeuristic, Comparable<IHeuristic>, Cloneable {
      * @return F = G + H
      * */
     @Override
-    public double getHeuristic() { return (getG() + getH()) * 1.5; }
+    public double getHeuristic() { return ((double) getG()) + getH(); }
 
     /**
      * @return H
      * */
-    public int getH() { return PathFindTool.getInstance().getDistance(location, end) * 10; }
+    public double getH() {
+        return PathFindTool.getInstance().getDistance(location, end) * 10.0D;
+    }
 
     /*
     * @return G
     * */
-    public int getG() { return g + n; }
+    public float getG() { return g; }
 
     @Override
     public int compareTo(IHeuristic o) {
@@ -93,5 +99,7 @@ public class Node implements IHeuristic, Comparable<IHeuristic>, Cloneable {
         return null;
     }
 
-    public void setBefore(Location before) { this.before = before; }
+    public void print() {
+        nodes.stream().forEach(i -> System.out.println(i.toString() + ": " + i.getHeuristic()));
+    }
 }

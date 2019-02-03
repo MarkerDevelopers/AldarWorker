@@ -1,13 +1,12 @@
 package com.ndy;
 
-import com.ndy.astar.AStarArea;
 import com.ndy.astar.node.Node;
+import com.ndy.astar.path.PathFindTool;
 import com.ndy.astar.path.PathFindType;
 import com.ndy.astar.path.PathFinder;
 import com.ndy.astar.path.PathVisualization;
 import net.minecraft.server.v1_12_R1.EnumParticle;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -48,16 +47,29 @@ public class MinecraftAstar extends JavaPlugin {
                 node.initialize();
 
                 System.out.println("F : " + node.getHeuristic());
+                System.out.println("distance : " + getDistance(node.getLocation(), finder.getEndNode().getLocation()));
+
+                node.print();
 
                 try {
                     Particle.send(node.getNode().getLocation().clone().add(0, 0.5, 0), 0.1f, 0.1f, 0.1f, 0, 1, EnumParticle.FIREWORKS_SPARK);
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
+            }else if (args.length == 1 && args[0].equals("a")) {
+                System.out.println("distance: " + getDistance(player.getLocation(), finder.getEndNode().getLocation()));
             }
         }
 
         return false;
+    }
+
+    public float getDistance(Location loc1, Location loc2) {
+        int x2 = loc2.getBlockX(), x1 = loc1.getBlockX();
+        int y2 = loc2.getBlockY(), y1 = loc1.getBlockY();
+        int z2 = loc2.getBlockZ(), z1 = loc1.getBlockZ();
+
+        return (float) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2) + Math.pow(z1 - z2, 2));
     }
 
 

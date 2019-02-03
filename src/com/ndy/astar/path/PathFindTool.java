@@ -2,6 +2,7 @@ package com.ndy.astar.path;
 
 import com.ndy.astar.node.Node;
 import org.bukkit.Location;
+import org.bukkit.Material;
 
 public class PathFindTool {
 
@@ -25,6 +26,10 @@ public class PathFindTool {
         return heightGap >= HEIGHT_GAP;
     }
 
+    public boolean isGround(Location location) {
+        return location.clone().subtract(0, 1, 0).getBlock().getType() == Material.AIR;
+    }
+
     private int getHeightGap(Node node1, Node node2) { return Math.abs(node1.getLocation().getBlockY() - node2.getLocation().getBlockY()); }
     public static int getHeightGap() { return HEIGHT_GAP; }
 
@@ -40,12 +45,18 @@ public class PathFindTool {
         return y;
     }
 
-    public int getDistance(Location loc1, Location loc2) {
+    public Location getHeightBlock(Location location, int height) {
+        if(height >= HEIGHT_GAP) return location;
+
+        return location.add(0, height, 0);
+    }
+
+    public float getDistance(Location loc1, Location loc2) {
         int x2 = loc2.getBlockX(), x1 = loc1.getBlockX();
         int y2 = loc2.getBlockY(), y1 = loc1.getBlockY();
         int z2 = loc2.getBlockZ(), z1 = loc1.getBlockZ();
 
-        return (int) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2) + Math.pow(z1 - z2, 2));
+        return (float) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2) + Math.pow(z1 - z2, 2));
     }
 
     public boolean equals(Location loc1, Location loc2) {
