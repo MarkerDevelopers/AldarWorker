@@ -1,0 +1,6 @@
+name: Astar
+main: com.ndy.MinecraftAstar
+version: 1.0
+
+commands:
+  astar:
