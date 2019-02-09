@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MinecraftAstar:jar">
+    <output-path>$USER_HOME$/Desktop/서버개발/1.12.2/plugins</output-path>
+    <root id="archive" name="MinecraftAstar.jar">
+      <element id="module-output" name="MinecraftAstar" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/plugin.yml" />
+    </root>
+  </artifact>
+</component>
