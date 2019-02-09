@@ -1,6 +1,8 @@
 name: Astar
-main: com.ndy.MinecraftAstar
+main: com.ndy.WorkerPlugin
 version: 1.0
 
 commands:
   astar:
+  packet:
+  worker:

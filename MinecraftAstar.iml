@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
     <orderEntry type="library" exported="" name="bukkit" level="project" />
+    <orderEntry type="library" exported="" name="PluginModuleAP1-12" level="project" />
   </component>
 </module>

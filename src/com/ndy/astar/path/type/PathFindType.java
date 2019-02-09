@@ -1,4 +1,4 @@
-package com.ndy.astar.path;
+package com.ndy.astar.path.type;
 
 public enum PathFindType {
 
@@ -8,5 +8,4 @@ public enum PathFindType {
 
     PathFindType(int type) { this.type = type; }
 
-    public int getType() { return type; }
 }

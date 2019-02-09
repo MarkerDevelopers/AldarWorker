@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Util {
 
-    private static List<Material> blockedBlock = Arrays.asList(Material.STATIONARY_WATER, Material.STATIONARY_LAVA);
+    private static List<Material> blockedBlock = Arrays.asList(Material.STATIONARY_WATER, Material.STATIONARY_LAVA, Material.SOIL);
 
     public static boolean isAllowBlock(Block block) {
         return !blockedBlock.contains(block.getType());
