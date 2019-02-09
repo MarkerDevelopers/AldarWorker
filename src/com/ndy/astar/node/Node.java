@@ -68,7 +68,7 @@ public class Node implements IHeuristic, Comparable<IHeuristic> {
      * */
     public double getH() { return PathFindTool.getInstance().getDistance(location, end) * 10.0D; }
 
-    /*
+    /**
     * @return G
     * */
     public float getG() { return g; }
